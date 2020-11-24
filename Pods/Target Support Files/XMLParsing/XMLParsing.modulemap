@@ -1,0 +1,6 @@
+module XMLParsing {
+  umbrella header "XMLParsing-umbrella.h"
+
+  export *
+  module * { export * }
+}

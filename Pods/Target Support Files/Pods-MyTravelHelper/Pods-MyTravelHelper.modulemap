@@ -1,0 +1,6 @@
+module Pods_MyTravelHelper {
+  umbrella header "Pods-MyTravelHelper-umbrella.h"
+
+  export *
+  module * { export * }
+}
