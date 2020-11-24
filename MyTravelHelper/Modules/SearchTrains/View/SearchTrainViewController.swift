@@ -14,6 +14,8 @@ class SearchTrainViewController: UIViewController {
     @IBOutlet weak var destinationTextField: UITextField!
     @IBOutlet weak var sourceTxtField: UITextField!
     @IBOutlet weak var trainsListTable: UITableView!
+    @IBOutlet weak var sourceButton: UIButton!
+    @IBOutlet weak var destinationButton: UIButton!
 
     var stationsList: [Station] = [Station]()
     var trains: [StationTrain] = [StationTrain]()
@@ -27,6 +29,14 @@ class SearchTrainViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        
+        let sText = "Source:  " + (UserDefaults.standard.string(forKey: "Source_Key") ?? "___")
+        sourceButton.setTitle(sText, for: .normal)
+        
+        let dText = "Destination:  " + (UserDefaults.standard.string(forKey: "Destination_Key") ?? "___")
+        
+        destinationButton.setTitle(dText, for: .normal)
+        
         if stationsList.count == 0 {
             SwiftSpinner.useContainerView(view)
             SwiftSpinner.show("Please wait loading station list ....")
@@ -38,6 +48,36 @@ class SearchTrainViewController: UIViewController {
         view.endEditing(true)
         showProgressIndicator(view: self.view)
         presenter?.searchTapped(source: transitPoints.source, destination: transitPoints.destination)
+    }
+    
+    @IBAction func makeSourceFavorite(_ sender: Any) {
+        view.endEditing(true)
+        
+        UserDefaults.standard.set(sourceTxtField.text, forKey: "Source_Key") //setObject
+
+        
+        let text = "Source: " + (sourceTxtField.text ?? "")
+        sourceButton.setTitle(text, for: .normal)
+    }
+    
+    @IBAction func makeDestinationFavorite(_ sender: Any) {
+        view.endEditing(true)
+        UserDefaults.standard.set(destinationTextField.text, forKey: "Destination_Key")
+        
+        let text = "Destination: " + (destinationTextField.text ?? "")
+
+        destinationButton.setTitle(text, for: .normal)
+    }
+    
+    @IBAction func applyFavoriteSource(_ sender: Any) {
+        view.endEditing(true)
+        
+        sourceTxtField.text = UserDefaults.standard.string(forKey: "Source_Key")
+    }
+    
+    @IBAction func applyFavoriteDestination(_ sender: Any) {
+        view.endEditing(true)
+        destinationTextField.text = UserDefaults.standard.string(forKey: "Destination_Key")
     }
 }
 
@@ -107,6 +147,7 @@ extension SearchTrainViewController:UITextFieldDelegate {
         dropDown.direction = .bottom
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.dataSource = stationsList.map {$0.stationDesc}
+        
         dropDown.selectionAction = { (index: Int, item: String) in
             if textField == self.sourceTxtField {
                 self.transitPoints.source = item
