@@ -33,7 +33,7 @@ protocol TrainViewWireframe: class {
 
 protocol TrainUseCase: class {
     var presenter:InteractorToPresenterProtocol? {get set}
-    func fetchallStations()
+    func fetchAllStations()
     func fetchTrainsFromSource(sourceCode:String,destinationCode:String)
 }
 

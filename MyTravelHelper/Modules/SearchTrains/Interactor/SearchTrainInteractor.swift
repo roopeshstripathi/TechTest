@@ -7,32 +7,22 @@
 //
 
 import Foundation
-import XMLParsing
+
 
 class SearchTrainInteractor: TrainUseCase {
     var _sourceStationCode = String()
     var _destinationStationCode = String()
     var presenter: InteractorToPresenterProtocol?
+    var networkManager = NetworkManager()
     
-    func fetchallStations() {
+    func fetchAllStations() {
         if Reach().isNetworkReachable() == true {
+            let endpoint = "http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML"
             
-            let urlString = "http://api.irishrail.ie/realtime/realtime.asmx/getAllStationsXML"
-            let dataTask = URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
-                guard error == nil else {
-                    return
-                }
+            networkManager.fetchAllStation(for: endpoint) { (station, error) in
                 
-                guard let responseData = data else {
-                    return
-                }
-                
-                let station = try? XMLDecoder().decode(Stations.self, from: responseData)
                 self.presenter?.stationListFetched(list: station?.stationsList ?? [])
             }
-            
-            dataTask.resume()
-            
         } else {
             self.presenter?.showNoInterNetAvailabilityMessage()
         }
@@ -41,29 +31,18 @@ class SearchTrainInteractor: TrainUseCase {
     func fetchTrainsFromSource(sourceCode: String, destinationCode: String) {
         _sourceStationCode = sourceCode
         _destinationStationCode = destinationCode
-        let urlString = "http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByCodeXML?StationCode=\(sourceCode)"
+        let endpoint = "http://api.irishrail.ie/realtime/realtime.asmx/getStationDataByCodeXML?StationCode=\(sourceCode)"
+        
         if Reach().isNetworkReachable() {
-            
-            let dataTask = URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
-                guard error == nil else {
-                    return
-                }
-                
-                guard let responseData = data else {
-                    return
-                }
-                
-                let stationData = try? XMLDecoder().decode(StationData.self, from: responseData)
+            networkManager.fetchTrainsFromSource(for: endpoint) { (stationData, error) in
                 if let _trainsList = stationData?.trainsList {
                     self.proceesTrainListforDestinationCheck(trainsList: _trainsList)
                 } else {
                     self.presenter?.showNoTrainAvailbilityFromSource()
                 }
             }
-            
-            dataTask.resume()
-            
-        } else {
+        }
+        else {
             self.presenter?.showNoInterNetAvailabilityMessage()
         }
     }
@@ -78,19 +57,12 @@ class SearchTrainInteractor: TrainUseCase {
         
         for index  in 0...trainsList.count-1 {
             group.enter()
-            let _urlString = "http://api.irishrail.ie/realtime/realtime.asmx/getTrainMovementsXML?TrainId=\(trainsList[index].trainCode)&TrainDate=\(dateString)"
+            
+            let endpoint = "http://api.irishrail.ie/realtime/realtime.asmx/getTrainMovementsXML?TrainId=\(trainsList[index].trainCode)&TrainDate=\(dateString)"
+            
             if Reach().isNetworkReachable() {
                 
-                let dataTask = URLSession.shared.dataTask(with: URL(string: _urlString)!) { (data, response, error) in
-                    guard error == nil else {
-                        return
-                    }
-                    
-                    guard let movementsData = data else {
-                        return
-                    }
-                    
-                    let trainMovements = try? XMLDecoder().decode(TrainMovementsData.self, from: movementsData)
+                networkManager.fetchTrainMovementsData(for: endpoint) { (trainMovements, error) in
                     
                     if let _movements = trainMovements?.trainMovements {
                         let sourceIndex = _movements.firstIndex(where: {$0.locationCode.caseInsensitiveCompare(self._sourceStationCode) == .orderedSame})
@@ -104,9 +76,6 @@ class SearchTrainInteractor: TrainUseCase {
                     }
                     group.leave()
                 }
-                
-                dataTask.resume()
-                
             } else {
                 self.presenter?.showNoInterNetAvailabilityMessage()
             }

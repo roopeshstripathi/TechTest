@@ -22,7 +22,7 @@ class SearchTrainPresenter: TrainViewPresentation {
     var view:TrainView?
 
     func fetchallStations() {
-        interactor?.fetchallStations()
+        interactor?.fetchAllStations()
     }
 
     private func getStationCode(stationName:String)->String {

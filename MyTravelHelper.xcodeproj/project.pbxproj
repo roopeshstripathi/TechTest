@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0748B22E256D4AE600CCA58B /* SearchTrainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0748B22D256D4AE600CCA58B /* SearchTrainInteractorTests.swift */; };
+		0748B235256E31E600CCA58B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0748B234256E31E600CCA58B /* NetworkManager.swift */; };
 		0FF4CCAFAEBB286408D5AAE4 /* libPods-MyTravelHelperTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B5124BDEB53DE8815A4A82 /* libPods-MyTravelHelperTests.a */; };
 		357114724CF03B793E372E9B /* libPods-MyTravelHelper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 285FC9B9F260720F49AB60D0 /* libPods-MyTravelHelper.a */; };
 		753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753C8FA122361EC9005FF13B /* TrainMovements.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0748B22D256D4AE600CCA58B /* SearchTrainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTrainInteractorTests.swift; sourceTree = "<group>"; };
+		0748B234256E31E600CCA58B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		285FC9B9F260720F49AB60D0 /* libPods-MyTravelHelper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyTravelHelper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AC217BE129DF751F8B32BB6 /* Pods-MyTravelHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelper.debug.xcconfig"; path = "Target Support Files/Pods-MyTravelHelper/Pods-MyTravelHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF93769EFC1C259BC25A014 /* Pods-MyTravelHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyTravelHelper.release.xcconfig"; path = "Target Support Files/Pods-MyTravelHelper/Pods-MyTravelHelper.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 		753F085A223618AE00175107 /* MyTravelHelperTests */ = {
 			isa = PBXGroup;
 			children = (
+				0748B22D256D4AE600CCA58B /* SearchTrainInteractorTests.swift */,
 				753C8FBD2237367E005FF13B /* SearchTrainPresenterTests.swift */,
 				753F085D223618AE00175107 /* Info.plist */,
 			);
@@ -144,6 +149,7 @@
 		753F08672236190700175107 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				0748B234256E31E600CCA58B /* NetworkManager.swift */,
 				753F08682236191900175107 /* SearchTrains */,
 			);
 			path = Modules;
@@ -232,7 +238,6 @@
 				9D34AF374568A5CA5DB287B0 /* Pods-MyTravelHelperTests.debug.xcconfig */,
 				D8156653C744DEEE4424410D /* Pods-MyTravelHelperTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -427,6 +432,7 @@
 				753C8FAC223623C2005FF13B /* SearchTrainInteractor.swift in Sources */,
 				753F087122361A6500175107 /* AppConstants.swift in Sources */,
 				753F0847223618AB00175107 /* AppDelegate.swift in Sources */,
+				0748B235256E31E600CCA58B /* NetworkManager.swift in Sources */,
 				753C8FA422361EC9005FF13B /* TrainMovements.swift in Sources */,
 				753C8FB022365E9A005FF13B /* SearchTrainRouter.swift in Sources */,
 			);
@@ -436,6 +442,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0748B22E256D4AE600CCA58B /* SearchTrainInteractorTests.swift in Sources */,
 				753C8FBE2237367E005FF13B /* SearchTrainPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
